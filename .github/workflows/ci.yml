@@ -9,11 +9,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
-      
+
       # --- API CHECKS ---
       - name: Install, Audit & Build API
-        run: cd apps/api && npm ci && npm audit --audit-level=high && npx tsc --noEmit && npm run build
-      
+        run: cd apps/api && npm install && npm audit --audit-level=high && npx tsc --noEmit && npm run build
+
       # --- DOCKER SMOKE TEST ---
       - name: Build Docker Image
         run: docker build -t sycro-api ./apps/api
@@ -26,7 +26,7 @@ jobs:
 
       # --- WEB CHECKS ---
       - name: Cryptographic smoke test
-        run: cd kronos-pq && npm run test:crypto
+        run: cd kronos-pq && npm install && npm run test:crypto
 
       - name: Install, Audit & Build Web
-        run: cd apps/web && npm ci && npm audit --audit-level=high && npm run build
+        run: cd apps/web && npm install && npm audit --audit-level=high && npm run build
